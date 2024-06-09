@@ -9,9 +9,11 @@ This document covers the architecture and services hosted.
    - We can proxy `sub.domain.com` to `localhost:9000`, for example.
    - Authentication is fairly lacklustre (consider Traefik maybe?)
    1. Nginx proxy manager: Web UI to manage Nginx configurations
-3. Authentik: Route authentication
+3. [WIP] Authentik: Route authentication
    - Allows us to do proxy authentication
 4. Firefly: Personal finance tracking app
+5. [WIP] Crowdsec: crowd sourced security
+6. Yacht: stop, start, delete, launch docker containers
 5. [TBD] Nextcloud: file storage
 6. [TBD] Bitwarden: password manager
 7. [TBD] Radarr: ???
@@ -20,11 +22,10 @@ This document covers the architecture and services hosted.
 10. [TBD] Adguard: adblocker dns
 11. [TBD] Paperless: document management
 12. [TBD] Plausible: analytics
-13. [TBD] Yacht: stop, start, delete, launch docker containers
+13. [TBD] 
 14. [TBD] Uptime Kuma: website uptime
 15. [TBD] OpnSense: firewall
-16. [TBD] Crowdsec: security
-17. [Maybe] N8n: Automation
+16. [Maybe] N8n: Automation
 
 ## Costs
 
