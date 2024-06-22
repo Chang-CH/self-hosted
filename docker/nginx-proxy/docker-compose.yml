@@ -1,7 +1,8 @@
 version: '3.8'
 services:
   app:
-    image: 'Lepresidente/nginxproxymanager:latest'
+    # crowdsec integrated drop in replacement for nginx proxy manager 'jc21/nginx-proxy-manager:latest'
+    image: 'lepresidente/nginxproxymanager:latest'
     restart: unless-stopped
     ports:
       - '80:80'

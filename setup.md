@@ -57,6 +57,11 @@ yourdomain.com,sub.yourdomain.com,sub2.yourdomain.com
    2. add as service: `sudo systemctl start ddclient.service`.
    3. run on restart: `sudo update-rc.d ddclient enable`.
 
+## Setting up reserve ip in DHCP
+
+1. enter router admin panel
+2. Navigate to `Home Network Configuration` > `Manual Devices Reservation` > enter mac, hostname,ip.
+
 ## [Optional] Setting up pgadmin
 
 ```sh

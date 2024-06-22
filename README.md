@@ -14,18 +14,27 @@ This document covers the architecture and services hosted.
 4. Firefly: Personal finance tracking app
 5. [WIP] Crowdsec: crowd sourced security
 6. Yacht: stop, start, delete, launch docker containers
-5. [TBD] Nextcloud: file storage
+7. Seafile: file storage
 6. [TBD] Bitwarden: password manager
 7. [TBD] Radarr: ???
 8. [TBD] Jellyfin: Audio/video streaming service
 9. [TBD] Jellyseerr: Overseerr fork for jellyfin. Manages requests for jellyfin library.
-10. [TBD] Adguard: adblocker dns
 11. [TBD] Paperless: document management
 12. [TBD] Plausible: analytics
-13. [TBD] 
 14. [TBD] Uptime Kuma: website uptime
 15. [TBD] OpnSense: firewall
 16. [Maybe] N8n: Automation
+
+## TBD
+
+- backup 
+   - `/var/lib/docker/volumes`: docker
+   - `pg_dumpall`: postgres
+   - `/etc/nginx`: nginx config
+   - seafile directory
+
+- Table of contents directory (express website + authentik?)
+- Todo list app
 
 ## Costs
 
