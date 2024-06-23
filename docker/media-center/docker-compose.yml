@@ -15,13 +15,13 @@ services:
     # access on localhost:8096
     network_mode: "host"
     volumes:
-      - /data/jellyfin/config:/config
-      - /data/jellyfin/cache:/cache
+      - ./data/jellyfin/config:/config
+      - ./data/jellyfin/cache:/cache
       - type: bind
-        source: /data/jellyfin/media
+        source: ./data/jellyfin/media
         target: /media
       - type: bind
-        source: /data/jellyfin/media2
+        source: ./data/jellyfin/media2
         target: /media2
         read_only: true
     restart: "unless-stopped"
