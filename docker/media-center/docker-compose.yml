@@ -34,7 +34,7 @@ services:
     container_name: transmission
     environment:
       - PUID=${ENV_PUID}
-      - PGID=${ENV_PGID}  
+      - PGID=${ENV_PGID}
       - TZ={TIMEZONE}
     volumes:
       - ${SERVICES_DIR}/transmission:/config
@@ -60,7 +60,7 @@ services:
     ports:
       - 7878:7878
     restart: unless-stopped
-  
+
   # Downloads TV series
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -89,7 +89,7 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
-    
+
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     restart: unless-stopped
@@ -100,3 +100,19 @@ services:
       - ${SERVICES_DIR}/jellyseerr:/app/config
     ports:
       - 5055:5055
+
+  # NZB downloader
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    environment:
+      - PUID=${ENV_PUID}
+      - PGID=${ENV_PGID}
+      - TZ={TIMEZONE}
+    volumes:
+      - ${SERVICES_DIR}/transmission:/config
+      - ${DATA_DIR}/downloads:/downloads
+      - ${DATA_DIR}/watch:/watch
+    ports:
+      - 8080:8080
+    restart: unless-stopped
