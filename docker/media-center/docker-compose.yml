@@ -46,6 +46,24 @@ services:
       - 51413:51413/udp
     restart: unless-stopped
 
+
+  # NZB downloader
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    hostname: sabnzbd
+    environment:
+      - PUID=${ENV_PUID}
+      - PGID=${ENV_PGID}
+      - TZ={TIMEZONE}
+    volumes:
+      - ${SERVICES_DIR}/transmission:/config
+      - ${DATA_DIR}/downloads:/data/downloads
+      - ${DATA_DIR}/watch:/watch
+    ports:
+      - 5858:8080
+    restart: unless-stopped
+
   # downloads movies
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -100,19 +118,3 @@ services:
       - ${SERVICES_DIR}/jellyseerr:/app/config
     ports:
       - 5055:5055
-
-  # NZB downloader
-  sabnzbd:
-    image: lscr.io/linuxserver/sabnzbd:latest
-    container_name: sabnzbd
-    environment:
-      - PUID=${ENV_PUID}
-      - PGID=${ENV_PGID}
-      - TZ={TIMEZONE}
-    volumes:
-      - ${SERVICES_DIR}/transmission:/config
-      - ${DATA_DIR}/downloads:/data/downloads
-      - ${DATA_DIR}/watch:/watch
-    ports:
-      - 5858:5858
-    restart: unless-stopped
