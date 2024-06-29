@@ -148,9 +148,7 @@ Below are the important settings you should edit, the instructions for sonarr ar
 | Use SSL                | Unchecked                                                   |
 | API Key                | Can be found under General section in radarr / sonarr panel |
 
-# 📋 TODO
+## Pricing
 
-- Add an option for rclone for ability to mount gdrive, etc.
-- Add Plex as an option
-- Add VPN option for Transmission torrent client
-- Explore the hype surrounding https://real-debrid.com
+- `NZBGeek`: 5$/6mo or $80/lifetime
+- `Eweka` provider: 50$/15mo
