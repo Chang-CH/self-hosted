@@ -1,4 +1,6 @@
-# Docker media center setup
+# Jellyfin setup
+
+This setup includes setting up jellyfin, as well as all the other services required to run jellyfin.
 
 This guide follows the original [dmc guide](https://github.com/EdyTheCow/docker-media-center), albeit modified a little.
 
@@ -16,7 +18,21 @@ We will be using the below domains:
 
 CNAME aliases the main `dmc.domain.com` ip. update `ddclient.conf` ddns (see dynamic dns) to update the root address.
 
-## Jellyfin
+This assumes you wish to have all services exposed. In most cases, jellyfin and jellyseer are the only services that need to be exposed. The rest can be accessed internally.
+
+## Pricing
+
+If you do not wish to torrent, you can choose to setup usenet. Usenet requires a provider and an indexer.
+Indexers are services that tell you where to find the files you want to download. Providers are services that host the files you want to download.
+
+- `NZBGeek`: 5$/6mo or $80/lifetime
+- `Eweka` provider: 50$/15mo
+
+## Services
+
+### Jellyfin
+
+Jellyfin's role is the media library. Watch your shows here. It listens to new files added to the media folders and updates the library accordingly.
 
 _Configuration_
 
@@ -29,12 +45,16 @@ Navigate to `jellyfin.domain.com` in your browser and follow the instructions. W
 
 Create the folders manually if they cannot be found.
 
-## Transmission
+### Transmission
+
+The torrent downloader. It listens to the watch folders and downloads torrents to the incomplete folder. Once the download is complete, it moves the files to the complete folder.
 
 _Configuration_
 Navigate to `transmission.domain.com` in your browser, you should be asked to login using the credentials for basic auth you set-up earlier. Under `Preferences -> Torrents` make sure your download paths look like this: `/data/downloads/complete` and `/data/downloads/incomplete`. This will be important later on for hardlinks.
 
-## Sabnzbd
+### Sabnzbd
+
+The usenet downloader. Works just like transmission but for usenet.
 
 _Configuration_
 Navigate to `localhost:5858` you should see a setup wizard. Configure the download colders: `/data/downloads/complete` and `/data/downloads/incomplete`.
@@ -46,7 +66,9 @@ Also head to the `0.0.0.0:5858/config/special`. Under host_whitelist, add `sabnz
 
 Lastly head to the `0.0.0.0:5858/config/categories`. rename `tv` to `tvshows`.
 
-## Radarr
+### Radarr
+
+The movie download manager. Searches for movies and downloads them using transmission or sabnzbd.
 
 _Configuration_
 
@@ -71,13 +93,9 @@ Under `Download Clients` add a new client by selecting SABnzbd. Change these set
 | Port    | 8080    |
 | API Key | \*      |
 
-## Sonarr
+### Sonarr
 
-Inside of `dmc/compose` run
-
-```
-docker-compose up -d sonarr
-```
+The TV show download manager. Searches for TV shows and downloads them using transmission or sabnzbd.
 
 _Configuration_
 Navigate to `sonarr.domain.com` in your browser, in the panel under `Media Management` section and add the root folder by simply selecting `/data/media/tvshows` directory.
@@ -102,13 +120,9 @@ Under `Download Clients` add a new client by selecting SABnzbd. Change these set
 | API Key  | \*      |
 | Category | tvshows |
 
-## Prowlarr
+### Prowlarr
 
-Inside of `dmc/compose` run
-
-```
-docker-compose up -d prowlarr
-```
+Prowlarr is a proxy that sits between Sonarr/Radarr and the indexers. It allows you to add multiple indexers and have them all sync with Sonarr and Radarr.
 
 _Configuration_
 Navigate to `prowlarr.domain.com` in your browser, under `Settings -> Apps` add Sonarr and Radarr.
@@ -124,13 +138,10 @@ Instructions for adding Sonarr are exactly the same, just change the name to `So
 
 Navigate to `Indexers` and click `Add Indexer` to add public or private indexers. Once added, these will automatically sync with Sonarr and Radarr.
 
-## Jellyseerr
+### Jellyseerr
 
-Inside of `dmc/compose` run
-
-```
-docker-compose up -d jellyseerr
-```
+Jellyseerr is a fork of overseerr. Its job is media discovery, allowing you to search and request for movies and TV shows.
+The requests, when approved, get downloaded by Radarr and Sonarr.
 
 _Configuration_
 Navigate to `jellyseerr.domain.com` in your browser, select option to use `Jellyfin account` and proceed by providing url and account details for your jellyfin installation. Scan and enable libraries.
@@ -147,8 +158,3 @@ Below are the important settings you should edit, the instructions for sonarr ar
 | Hostname or IP Address | radarr                                                      |
 | Use SSL                | Unchecked                                                   |
 | API Key                | Can be found under General section in radarr / sonarr panel |
-
-## Pricing
-
-- `NZBGeek`: 5$/6mo or $80/lifetime
-- `Eweka` provider: 50$/15mo
